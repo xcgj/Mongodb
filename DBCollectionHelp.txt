@@ -1,0 +1,43 @@
+DBCollection help
+	db.集合名.find().help() - show DBCursor help
+	db.集合名.count()
+	db.集合名.copyTo(newColl) - duplicates collection by copying all documents to newColl; no indexes are copied.
+	db.集合名.convertToCapped(maxBytes) - calls {convertToCapped:'集合名', size:maxBytes}} command
+	db.集合名.dataSize()
+	db.集合名.distinct( key ) - e.g. db.集合名.distinct( 'x' )
+	db.集合名.drop() drop the collection
+	db.集合名.dropIndex(index) - e.g. db.集合名.dropIndex( "indexName" ) or db.集合名.dropIndex( { "indexKey" : 1 } )
+	db.集合名.dropIndexes()
+	db.集合名.ensureIndex(keypattern[,options]) - options is an object with these possible fields: name, unique, dropDups
+	db.集合名.reIndex()
+	db.集合名.find([query],[fields]) - query is an optional query filter. fields is optional set of fields to return.
+	                                              e.g. db.集合名.find( {x:77} , {name:1, x:1} )
+	db.集合名.find(...).count()
+	db.集合名.find(...).limit(n)
+	db.集合名.find(...).skip(n)
+	db.集合名.find(...).sort(...)
+	db.集合名.findOne([query])
+	db.集合名.findAndModify( { update : ... , remove : bool [, query: {}, sort: {}, 'new': false] } )
+	db.集合名.getDB() get DB object associated with collection
+	db.集合名.getPlanCache() get query plan cache associated with collection
+	db.集合名.getIndexes()
+	db.集合名.group( { key : ..., initial: ..., reduce : ...[, cond: ...] } )
+	db.集合名.insert(obj)
+	db.集合名.mapReduce( mapFunction , reduceFunction , <optional params> )
+	db.集合名.aggregate( [pipeline], <optional params> ) - performs an aggregation on a collection; returns a cursor
+	db.集合名.remove(query)
+	db.集合名.renameCollection( newName , <dropTarget> ) renames the collection.
+	db.集合名.runCommand( name , <options> ) runs a db command with the given name where the first param is the collection name
+	db.集合名.save(obj)
+	db.集合名.stats()
+	db.集合名.storageSize() - includes free space allocated to this collection
+	db.集合名.totalIndexSize() - size in bytes of all the indexes
+	db.集合名.totalSize() - storage allocated for all data and indexes
+	db.集合名.update(query, object[, upsert_bool, multi_bool]) - instead of two flags, you can pass an object with fields: upsert, multi
+	db.集合名.validate( <full> ) - SLOW
+	db.集合名.getShardVersion() - only for use with sharding
+	db.集合名.getShardDistribution() - prints statistics about data distribution in the cluster
+	db.集合名.getSplitKeysForChunks( <maxChunkSize> ) - calculates split points over all chunks and returns splitter function
+	db.集合名.getWriteConcern() - returns the write concern used for any operations on this collection, inherited from server/db if set
+	db.集合名.setWriteConcern( <write concern doc> ) - sets the write concern for writes to the collection
+	db.集合名.unsetWriteConcern( <write concern doc> ) - unsets the write concern for writes to the collection

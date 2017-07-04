@@ -1,0 +1,67 @@
+安装cmake 3.2以上
+//cmake -version
+
+sudo apt-get install git vim mongodb cmake
+
+下载c驱动包1.6.3
+安装libmongoc:  sudo apt install libmongoc-1.0-0
+解压c驱动包: tar -zxvf mongo-c-driver-1.6.3.tar.gz
+cd mongo-c-driver-1.6.3 
+./configure    //disable-automatic-init-and-cleanup
+make
+sudo make install
+
+
+安装Cxx驱动：
+tar -zxvf mongo-cxx-driver-r3.1.1.tar.gz
+cd mongo-cxx-driver-r3.1.1/build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local ..
+sudo make EP_mnmlstc_core
+make && sudo make install
+
+把test.txt中的代码拷贝到test.cpp中
+
+先打开配置文件：
+sudo vim /etc/ld.so.conf
+把内容修改为：
+sudo vim /etc/ld.so.conf
+/usr/local
+
+编译方式：
+g++ --std=c++11 test.cpp -o test -I/usr/local/include/mongocxx/v_noabi -I/usr/local/include/bsoncxx/v_noabi -L/usr/local/lib -lmongocxx -lbsoncxx
+
+运行：
+sudo ldconfig
+./test
+
+
+//测试代码:
+//报错解决: sudo vim /etc/ld.so.conf
+//sudo ldconfig
+//./test
+
+
+#include <iostream>
+
+#include <bsoncxx/builder/stream/document.hpp>
+#include <bsoncxx/json.hpp>
+
+#include <mongocxx/client.hpp>
+#include <mongocxx/instance.hpp>
+
+int main(int, char**) {
+    mongocxx::instance inst{};
+    mongocxx::client conn{mongocxx::uri{}};
+
+    bsoncxx::builder::stream::document document{};
+
+    auto collection = conn["testdb"]["testcollection"];
+    document << "hello" << "world";
+
+    collection.insert_one(document.view());
+    auto cursor = collection.find({});
+
+    for (auto&& doc : cursor) {
+        std::cout << bsoncxx::to_json(doc) << std::endl;
+    }
+}

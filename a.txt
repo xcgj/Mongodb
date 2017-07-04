@@ -1,0 +1,109 @@
+﻿create table test1(id int, name varchar(12),score int);
+insert into test1 values(1,1.1);
+select * from test1 where money=1.1;
+drop table test1;
+
+
+select * from test1;
+
+insert into test1 values(9,'王五',10);
+
+select name,sum(score) from test1 group by name having sum(score) >100 ;
+select * from test1 order by score desc,id desc;
+select * from test;
+select * from class;
+insert into class values(4,'就业04期');
+select * from test where classId = (select id from class where name = '就业01期');
+in not in any some all
+
+select * from test, class where test.classId=class.id; //等值连接
+select * from test t inner join class c on t.classId=c.id;
+
+select * from test t full join class c on t.classId=c.id;
+select * from class c left join test t on c.id = t.classId;
+
+select id,name from test
+union
+select id,name from class;
+insert into test values(3,'zhang',5,5);
+
+select * from test left join  class on test.classId=class.id
+union
+select * from test right join class on test.classId = class.id;
+show ENGINE;
+
+select replace('abcdef','cde','aaa');
+select dayofweek('2017/06/29');
+select * from test where  name='zhangsan';
+select * from test limit 1,5;
+sql server  top   select top  20 id,name from test where id  not in(select top 10 from test);
+create index id_index on test(name(5));
+show index from test;
+create index uid_index on test(id,name);
+alter table test drop index id_index;
+show ENGINES;
+
+create table test2(id int primary key,name varchar(12));
+create table test3(id int ,name varchar(12),age int,primary key(id,age));
+
+select * from test;
+select * from class;
+create table test4(id int primary key,name varchar(12) ,classId int, foreign key(classId) REFERENCES class(id));
+alter table class add constraint primary key(id);
+insert into test4 values(1,'zhag',4);
+select * from test4;
+delete from class where id=4;
+delete from test4;
+create table test5(id int primary key,name varchar(12) not null,age int check >10);
+insert into test5(id,name) values(1,'sdfs');
+select * from test6;
+create table test6(id int primary key auto_increment,age int);
+insert into test6(age) values(12);
+create table test7(id int primary key auto_increment,age int) AUTO_INCREMENT=1000;
+drop table test7;
+sql server create table test(id int primary key identity(1,1));
+insert into test7(age) values(2);
+select * from test7;
+
+begin;
+insert into test7(age) values(5);
+insert into test8(age) values(4);
+rollback;
+
+create table test8(username varchar(12),pwd varchar(12));
+insert into test8 values('abc','abc');
+
+
+select * from test4;
+select * from class;
+insert into test4 values(1,'abc',2);
+delete from class where id=2;
+
+create trigger t_class
+before
+update
+on class
+for each row
+BEGIN
+delete from test4 where classId=NEW.id;
+end
+
+drop trigger t_class;
+
+create procedure t_procedure(IN id int,IN name varchar(12),IN classId int)
+begin 
+insert into test4 values(id,name,classId);
+end
+drop procedure t_procedure;
+call t_procedure(3,"abcd'or pwd like '%",1);
+select * from test4;
+
+SQL 注入
+select * from test8 where username='abc' and pwd='abcd'or pwd like '%';
+
+select * from test left join class on test.classId = class.id;
+create view t_view
+as
+select test.id,test.name,class.id as cid,class.name as cname from test left join class on test.classId = class.id;
+
+select * from t_view;
